@@ -1,11 +1,11 @@
-
 import axios from "axios";
 
-export default {
+const PostsApi = {
   getPosts() {
-    return axios.get("https://picsum.photos/list")
-      .then(response => {
-        return response.data;
-      });
-  }
+    return axios.get("https://picsum.photos/list").then((response) => {
+      return response.data;
+    });
+  },
 };
+
+export default PostsApi;

@@ -12,23 +12,30 @@ import PostsApi from "../services/PostsApi";
 
 const useStyles = makeStyles({
   card: {
-    margin: 20
+    margin: 20,
   },
   media: {
     minWidth: 250,
-    minHeight: 375
+    minHeight: 375,
   },
   hrefLinksNoStyle: {
     color: "inherit",
     cursor: "inherit",
-    textDecoration: "none"
-  }
+    textDecoration: "none",
+  },
 });
 
 const getSrc = (id) => {
   const imagePostWidth = 250;
   const imagePostHeight = 375;
-  return "https://picsum.photos/" + imagePostWidth + "/" + imagePostHeight + "?image=" + id;
+  return (
+    "https://picsum.photos/" +
+    imagePostWidth +
+    "/" +
+    imagePostHeight +
+    "?image=" +
+    id
+  );
 };
 
 const getAuthorUserName = (str) => {
@@ -50,12 +57,7 @@ const Posts = () => {
   }, []);
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-    >
+    <Grid container direction="row" justifyContent="center" alignItems="center">
       {data.posts.map((post, index) => (
         <Grid item lg key={post.id}>
           <Card className={classes.card}>
@@ -76,10 +78,24 @@ const Posts = () => {
             </CardActionArea>
             <CardActions>
               <Button size="small" color="primary">
-                <a className={classes.hrefLinksNoStyle} href={post.author_url} target="_blank" rel="noopener noreferrer">See My Work</a>
+                <a
+                  className={classes.hrefLinksNoStyle}
+                  href={post.author_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See My Work
+                </a>
               </Button>
               <Button size="small" color="primary">
-                <a className={classes.hrefLinksNoStyle} href={post.post_url} target="_blank" rel="noopener noreferrer">Image Source</a>
+                <a
+                  className={classes.hrefLinksNoStyle}
+                  href={post.post_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Image Source
+                </a>
               </Button>
             </CardActions>
           </Card>
@@ -87,8 +103,6 @@ const Posts = () => {
       ))}
     </Grid>
   );
-
 };
 
 export default Posts;
-
