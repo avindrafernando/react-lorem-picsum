@@ -1,11 +1,11 @@
 import React from "react";
-import { render, waitForElement} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import axiosMock from "axios";
 import Posts from "./Posts";
 
 jest.mock("axios");
 
-test("Posts Component", async () => {
+it("Should render the Posts component", async () => {
   // Arrange
   const returnData = [
     {
@@ -16,7 +16,7 @@ test("Posts Component", async () => {
       height: 3744,
       id: 0,
       post_url: "https://unsplash.com/photos/yC-Yzbqy7PY",
-      width: 5616
+      width: 5616,
     },
     {
       author: "Jane Doe",
@@ -26,31 +26,26 @@ test("Posts Component", async () => {
       height: 1656,
       id: 1,
       post_url: "https://unsplash.com/photos/pwaaqfoMibI",
-      width: 2500
-    }
+      width: 2500,
+    },
   ];
 
   axiosMock.get.mockResolvedValueOnce({ data: returnData });
-  
+
   // Act
-  // const {getByTitle, container} = render(<Posts/>);
+  render(<Posts />);
 
-  // const [cardNode1, cardNode2] = await waitForElement(() =>
-  //   [getByTitle("John Doe"), getByTitle("Jane Doe")]
-  // );
-
-  const {findByTitle, container} = render(<Posts/>);
-
-  const cardNode1 = await findByTitle("John Doe");
-  const cardNode2 = await findByTitle("Jane Doe");
+  const cardNode1 = await screen.findByTitle("John Doe");
+  const cardNode2 = await screen.findByTitle("Jane Doe");
 
   // Assert
   expect(axiosMock.get).toHaveBeenCalledTimes(1);
   expect(axiosMock.get).toHaveBeenCalledWith("https://picsum.photos/list");
-  
-  expect(cardNode1).toHaveStyle("backgroundImage: 'url(\"https://picsum.photos/250/375?image=0\")'");
-  expect(cardNode2).toHaveStyle("backgroundImage: 'url(\"https://picsum.photos/250/375?image=1\")'");
 
-  // snapshots work great with regular DOM nodes!
-  expect(container.firstChild).toMatchSnapshot();
+  expect(cardNode1).toHaveStyle(
+    "backgroundImage: 'url(\"https://picsum.photos/250/375?image=0\")'"
+  );
+  expect(cardNode2).toHaveStyle(
+    "backgroundImage: 'url(\"https://picsum.photos/250/375?image=1\")'"
+  );
 });
