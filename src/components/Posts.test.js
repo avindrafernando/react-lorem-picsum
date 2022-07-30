@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import axiosMock from "axios";
 import Posts from "./Posts";
 
@@ -35,17 +35,22 @@ it("Should render the Posts component", async () => {
   // Act
   render(<Posts />);
 
-  const cardNode1 = await screen.findByTitle("John Doe");
-  const cardNode2 = await screen.findByTitle("Jane Doe");
+  // const [cardNodeForJohnDoe, cardNodeForJaneDoe] = await waitFor(() => [
+  //   screen.getByTitle("John Doe"),
+  //   screen.getByTitle("Jane Doe"),
+  // ]);
+
+  const cardNodeForJohnDoe = await screen.findByTitle("John Doe");
+  const cardNodeForJaneDoe = await screen.findByTitle("Jane Doe");
 
   // Assert
   expect(axiosMock.get).toHaveBeenCalledTimes(1);
   expect(axiosMock.get).toHaveBeenCalledWith("https://picsum.photos/list");
 
-  expect(cardNode1).toHaveStyle(
+  expect(cardNodeForJohnDoe).toHaveStyle(
     "backgroundImage: 'url(\"https://picsum.photos/250/375?image=0\")'"
   );
-  expect(cardNode2).toHaveStyle(
+  expect(cardNodeForJaneDoe).toHaveStyle(
     "backgroundImage: 'url(\"https://picsum.photos/250/375?image=1\")'"
   );
 });
